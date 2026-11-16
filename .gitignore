@@ -1,0 +1,27 @@
+# Scan data: raw, large, and possibly human-subject data. Never commit.
+10-30 Scan - Broken Coil/
+D002_RestingState_240705/
+D003_RestingState+Anat_240705/
+*.zip
+nifti_output/
+*.dat
+*.nii
+*.nii.gz
+*.dcm
+*.IMA
+
+# Figures made from the human resting-state scan (D003)
+coil_analysis/histogram.png
+coil_analysis/snr_map_axial.png
+coil_analysis/sector_report.png
+coil_analysis/overlay_preview/
+
+# Local / generated
+.claude/settings.local.json
+__pycache__/
+.pytest_cache/
+node_modules/
+*.pyc
+
+# Throwaway scripts with paths to human-subject data
+dicom_peek*.py

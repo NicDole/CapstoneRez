@@ -1,0 +1,63 @@
+{
+  "t1_mprage_sag_iso2mm_untune_injected_L07": {
+    "subcoils": {
+      "HEAD128_5301": {
+        "elements": 20,
+        "signal_vs_coil": 0.63
+      },
+      "HEAD128_5302": {
+        "elements": 20,
+        "signal_vs_coil": 1.01
+      },
+      "HEAD128_5303": {
+        "elements": 20,
+        "signal_vs_coil": 0.83
+      },
+      "HEAD128_5304": {
+        "elements": 16,
+        "signal_vs_coil": 1.31
+      },
+      "HEAD128_5305": {
+        "elements": 8,
+        "signal_vs_coil": 0.21
+      },
+      "HEAD128_5306": {
+        "elements": 24,
+        "signal_vs_coil": 1.32
+      }
+    },
+    "flagged": [
+      {
+        "element": "HEAD128_5304:L07",
+        "reason": "low signal",
+        "score": 25.7
+      }
+    ],
+    "top_scores": [
+      {
+        "element": "HEAD128_5304:L07",
+        "score": 25.7
+      },
+      {
+        "element": "HEAD128_5305:J08",
+        "score": 3.3
+      },
+      {
+        "element": "HEAD128_5305:J02",
+        "score": 3.1
+      },
+      {
+        "element": "HEAD128_5303:Q20",
+        "score": 3.0
+      },
+      {
+        "element": "HEAD128_5302:P20",
+        "score": 2.9
+      },
+      {
+        "element": "HEAD128_5301:O12",
+        "score": 2.7
+      }
+    ]
+  }
+}
