@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-13 15:16:35",
+  "saved": "2026-11-21 19:14:27",
+  "baseline": false,
+  "status": "WATCH",
+  "summary": "7 element(s) changed or drifting since baseline",
+  "top": [
+    "M02",
+    "M09",
+    "M04",
+    "J07",
+    "M01"
+  ],
+  "protocol": "SNR_Map_Tra_H0_unmatch",
+  "files": [
+    "meas_MID00022_FID35239_t1_mprage_sag_iso2mm_unmatch.dat",
+    "meas_MID00021_FID35238_SNR_Map_Tra_H0_unmatch.dat"
+  ],
+  "maps_from_3d": true,
+  "notes": "11-13: M02 slightly unmatched + coil moved",
+  "operator": "demo"
+}

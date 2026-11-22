@@ -77,6 +77,8 @@ def load_scan(dat_path: str, n: int = MAP_SIZE) -> dict:
     adc_to_label = {c["lADCChannelConnected"] - 1:
                     f'{c["sCoilElementID"]["tCoilID"]}:{c["sCoilElementID"]["tElement"]}'
                     for c in coil_list}
+    coil_keys = {f'{c["sCoilElementID"]["tCoilID"]}:{c["sCoilElementID"]["tElement"]}':
+                 str(c["sCoilElementID"].get("ulUniqueKey", "")) for c in coil_list}
 
     image_blocks = [b for b in meas["mdb"] if b.is_image_scan()]
     noise_blocks = [b for b in meas["mdb"] if b.is_flag_set("NOISEADJSCAN")]
@@ -118,7 +120,16 @@ def load_scan(dat_path: str, n: int = MAP_SIZE) -> dict:
         n_noise = noise.shape[1]
     return {"path": dat_path, "protocol": yaps.get("tProtocolName", ""), "labels": labels, "adc": adc,
             "images": im, "is_3d": n_par > 1, "noise_cov": noise_cov, "noise_psd": noise_psd,
-            "noise_samples": n_noise}
+            "noise_samples": n_noise, "meta": scan_meta(meas["hdr"]), "coil_keys": coil_keys}
+
+
+def scan_meta(hdr: dict) -> dict:
+    """Scan date, scanner and software from the header. Patient fields are never read."""
+    dicom, meas = hdr.get("Dicom", {}), hdr.get("Meas", {})
+    get = lambda k: str(meas.get(k) or dicom.get(k) or "")
+    return {"date": get("PrepareTimestamp"), "scanner_model": get("ManufacturersModelName"),
+            "scanner_serial": get("DeviceSerialNumber"), "software": get("SoftwareVersions"),
+            "protocol": str(hdr.get("MeasYaps", {}).get("tProtocolName", ""))}
 
 
 def noise_spectrum(readouts: list) -> np.ndarray:
@@ -132,7 +143,11 @@ def noise_spectrum(readouts: list) -> np.ndarray:
 
 def load_session(paths: list) -> dict:
     """Combine the scans of one coil state: maps from the 3D scan, noise from noise readouts."""
-    scans = [load_scan(p) for p in paths]
+    return combine_scans([load_scan(p) for p in paths])
+
+
+def combine_scans(scans: list) -> dict:
+    """Session from already-loaded scans (see load_session)."""
     maps = max(scans, key=lambda s: (s["is_3d"], s["images"].size))
     with_noise = [s for s in scans if s["noise_cov"] is not None]
     noise_cov = noise_psd = None
@@ -147,7 +162,9 @@ def load_session(paths: list) -> dict:
         adc = src["adc"][order]        # receiver channel the noise spectrum was recorded on
     return {"labels": maps["labels"], "images": maps["images"], "noise_cov": noise_cov,
             "noise_psd": noise_psd, "adc": adc,
-            "protocol": maps["protocol"], "paths": [s["path"] for s in scans]}
+            "protocol": maps["protocol"], "paths": [s["path"] for s in scans],
+            "meta": (with_noise[0] if with_noise else maps)["meta"], "coil_keys": maps["coil_keys"],
+            "maps_3d": maps["is_3d"]}
 
 
 # ── Single-scan features and detection ────────────────────────────────────────

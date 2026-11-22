@@ -527,6 +527,90 @@ A partly weak element in a moderately covered area looks the same as a poorly co
 
 ---
 
+## Phase 4 — 11-13 test day and the Coil Tracker app (2026-11-18 → 2026-11-21)
+
+### 11-13 data
+- **Sessions:** healthy (MID17/18), untune (MID19/20, M09), unmatch (MID21/22, M02).
+- **Setup:** the user described the faults as deliberately slight adjustments, with the coil also
+  moved further from the head, to mimic slow drift and misplacement.
+- **Single-scan detector (3f):** missed both. M02 ranked #15 and M09 #72.
+  - M02: signal ×0.75 and noise ×0.78 moved together, so SNR fell only −3.5%. M02 had been one of
+    the brightest elements and now looks average.
+  - M09: noise −3.6%, tilt shift about 1/6 of L07's.
+- **Against the same-day healthy scan:** both are #1 by a wide margin.
+- **Conclusion:** the physical effect is small (SNR change ≤ 3.5%). These faults are detectable
+  only against the coil's own history.
+
+### Decision
+- The user (with the prof) approved Option D.
+- Requirement: **every scan runs both** the single-scan checks and the history/drift checks.
+- The history check must work from one user-marked healthy baseline.
+
+### Coil Tracker (`coil_tracker/`, docs in `docs/COIL_TRACKER.md`)
+- **Fingerprint:** about 130 KB per scan. Per-element signal, noise, tilt, ADC channel, centroid,
+  full noise covariance and a 128-bin noise spectrum, plus header metadata. No images, no patient
+  fields; `scan_meta` reads only the date, scanner and software.
+- **Four checks** (`checks.py`):
+  - single-scan (the 3f detector)
+  - missing elements
+  - change since baseline
+  - drift (Theil–Sen over scans since the baseline, needs 3)
+- **Change and drift use two-way evidence.** An element counts only when it stands out from both
+  the whole coil (robust z) and its neighbours, in the same direction. Whole-coil and regional
+  changes are reported as placement alerts instead.
+- **Combined score:** √(single² + change² + drift²).
+- **Levels:**
+  - Fault: single-scan evidence > 5, or a missing element.
+  - Watch: change or drift evidence > 5 in a **noise-based measure** (noise, coupling, tilt).
+  - Signal-only changes are labelled "likely position".
+  - Why: on 10-30 the first version flagged 8–11 elements as Watch, most of them signal-only
+    placement changes. All real faults changed a noise measure.
+- **Library:** one folder per coil, one `.npz` + `.json` per scan, no database (safe on network
+  drives).
+  - Baseline reset is a marker; old flags are kept, so old reports re-open as judged at the time.
+  - Baselines of the same map type (with/without MPRAGE) are preferred.
+- **GUI:** PySide6, with an analyse dialog (auto-detects files in a session folder), a coil
+  choice dialog (auto-match by element labels), a report page (status banner, top 5 with
+  "physically verify" on the top 3, alerts, position plot, full ranking, save/baseline/PDF) and a
+  coil page (scan table, baseline management, element history plot).
+  - McGill-red styling (`style.py`, a Qt stylesheet); plots use the same palette.
+  - **Mark as checked (known quirks):** a checked element no longer counts as a single-scan
+    fault, but change and drift still count, and a checked element that goes dead or near-dead
+    is always a Fault again. Checked elements are listed under "Known quirks" in every report and
+    on the coil page, with Unmark. First version hid the element with no way back; fixed
+    2026-11-21 after user feedback.
+- **Packaging:** PyInstaller one-folder build (`packaging/build_exe.bat`), about 174 MB.
+  - Hidden `--selftest` mode in `run_coil_tracker.py` verifies a build end to end.
+
+### Validation (real data, MPRAGE + SNR map)
+
+| Case | Rank | Score vs next |
+|---|---|---|
+| 10-30 L05 vs benchmark | #1 | 92 vs 16 |
+| 10-30 L07 vs benchmark | #1 | 34 vs 11 |
+| 11-13 M02 vs healthy | #1 | 66 vs 10 |
+| 11-13 M09 vs healthy | #1 | 14 vs 7 |
+
+- **False-alarm check** (11-13 healthy vs 10-30 benchmark): OK.
+- **SNR-map-only:** all four #1, but the J sub-coil gives false alarms, so the protocol recommends
+  MPRAGE + SNR map.
+
+### Tests
+- `tests/test_coil_tracker.py`: 12 tests on a simulated coil with realistic element spread
+  (gain 15%, noise 12%). They cover the fingerprint round trip, first scan, dead element, M02-like
+  and M09-like changes, ring placement shift, missing element, slow drift, checked quirk (and a
+  checked element that dies), the library workflow and unknown coils.
+- 48 tests total pass.
+
+### Status (2026-11-21)
+Built, tests and the packaged-app self-test pass. **Not yet bug-tested by users.**
+
+### Example library
+`examples/demo_library` holds the real 10-30 and 11-13 sessions as summaries only (794 KB), for
+trying the app without the raw data.
+
+---
+
 ## Data Notes
 
 **NIfTI affine:** The `memprage_echo1_cXX23.nii.gz` file has a degenerate affine from dcm2niix:
@@ -584,6 +668,13 @@ All code is working and tested. Verified outputs as of 2026-04-12:
 ---
 
 ## Next Steps
+
+**As of 2026-11-21 (after Phase 4 — Coil Tracker app):** see "Suggested next steps" in
+`docs/COIL_TRACKER.md`. Top priorities:
+- user bug testing of the v1.0.0 app (not done yet)
+- regular weekly QA scans with the same phantom, to measure false alarms and tune thresholds
+- per-element repeatability once 5+ baselines exist
+- faster loading
 
 **As of 2026-11-03 (after Phase 3f — tuning indicator built in)**
 - Confirm the tuning indicator on a new, unseen fault when scanner time is available (ideally a detuned element other than L07)

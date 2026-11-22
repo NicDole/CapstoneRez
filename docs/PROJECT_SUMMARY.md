@@ -1,6 +1,6 @@
 # Coil Fault Detection — Project Summary
 
-Updated Nov 4, 2026 · Live version: https://claude.ai/artifact/FiCy7YnzD6ChhXtjYe8As7
+Updated Nov 21, 2026 · Live version (last synced Nov 4, before the Coil Tracker app): https://claude.ai/artifact/FiCy7YnzD6ChhXtjYe8As7
 
 **Goal:** feed in one headcap session (Siemens raw `.dat`) and get back which receive-coil elements, if any, are broken. The target is coils with hundreds of elements. The output is a ranked top-3 suspect list to guide manual repair.
 
@@ -9,7 +9,7 @@ Updated Nov 4, 2026 · Live version: https://claude.ai/artifact/FiCy7YnzD6ChhXtj
 - **From a single scan, the tool now puts both broken elements in its top 3:** L07 (untuned) is **#2** and L05 (dematched) is **#3**. Before, they were #15 and #70.
 - **The key was the noise spectrum, not the images.** Each element's background noise is slightly tilted across the receiver band. After removing a hardware pattern (odd and even receiver channels tilt opposite ways), the tilt shows how well the element is tuned.
 - **Dead or nearly dead elements** are still always found (100% in simulation).
-- **Comparing against the coil's own history (Option D)** would find both faults at #1 by a wide margin. It is not built; it needs the prof's approval.
+- **Comparing against the coil's own history (Option D)** was approved and is now built into the **Coil Tracker** app (below). With one healthy baseline it puts all four real test faults (10-30 L05/L07, 11-13 M02/M09) at **#1**.
 
 ## What we tried
 
@@ -55,11 +55,31 @@ Updated Nov 4, 2026 · Live version: https://claude.ai/artifact/FiCy7YnzD6ChhXtj
 - Dematch is still the weaker case.
 - Detuning smaller than about half of L07's is not reliably caught from one scan.
 
+## Coil Tracker app (Nov 2026)
+
+A standalone Windows program (`CoilTracker.exe`) for post-docs and students. Guide and handover notes: `docs/COIL_TRACKER.md`.
+
+- **Every scan runs both kinds of check:** the single-scan detector above (dead, missing, badly detuned elements) and the history checks (change since the healthy baseline, and drift over scans).
+- **Output:** a top-5 list (top 3 always marked "physically verify"), alerts, an element-position plot, the full ranking and a PDF export.
+- **Saves a ~130 KB summary per scan, not the raw data**, and no patient details, so the `.dat` files can be archived.
+- **One healthy baseline is enough.** The first scan of a coil is checked on its own; once verified it is saved as the baseline.
+
+| Real test fault | Single scan only | With baseline |
+| --- | --- | --- |
+| 10-30 L05 dematched | #3 | **#1** (92 vs 16) |
+| 10-30 L07 untuned | #2 | **#1** (34 vs 11) |
+| 11-13 M02 slightly unmatched + coil moved | #15 | **#1** (66 vs 10) |
+| 11-13 M09 slightly untuned + coil moved | #72 | **#1** (14 vs 7) |
+
+A healthy scan compared with another day's healthy scan (coil moved) came out OK, with no false alarm.
+
+**Status:** built, automated tests and a packaged-app self-test pass, **but it has not yet been bug-tested by users.**
+
 ## Questions to ask
 
 **Prof**
 
-1. Go or no-go on **Option D (coil history)**? It gives #1 with a large margin, against top 3 with a small margin from one scan.
+1. ~~Go or no-go on **Option D (coil history)**?~~ Approved; built as the Coil Tracker.
 2. Is a top-3 suspect list enough, or does the tool need to say confidently whether anything is wrong at all?
 
 **Experimenters**
@@ -77,6 +97,7 @@ Updated Nov 4, 2026 · Live version: https://claude.ai/artifact/FiCy7YnzD6ChhXtj
 
 **Status:**
 
-- The tool runs end to end with `python coil_analysis/channel_fault_analysis.py MPRAGE.dat SNRMAP.dat`.
-- All 25 tests pass.
-- Details are in `.claude/TECHNICAL_LOG.md` (Phases 3c–3f), and sources are in `docs/References.docx`.
+- The single-scan tool runs end to end with `python coil_analysis/channel_fault_analysis.py MPRAGE.dat SNRMAP.dat`.
+- The Coil Tracker app builds to `dist\CoilTracker\` with `packaging\build_exe.bat`. Not yet bug-tested by users.
+- All 48 tests pass.
+- Details are in `.claude/TECHNICAL_LOG.md` (Phases 3c–4), and sources are in `docs/References.docx`.

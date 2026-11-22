@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-30 15:01:04",
+  "saved": "2026-11-21 19:14:27",
+  "baseline": false,
+  "status": "WATCH",
+  "summary": "2 element(s) changed or drifting since baseline",
+  "top": [
+    "L05",
+    "Q11",
+    "O12",
+    "Q09",
+    "L07"
+  ],
+  "protocol": "SNR_Map_Tra_H0_dematch2",
+  "files": [
+    "meas_MID00041_FID34552_t1_mprage_sag_iso2mm_dematch.dat",
+    "meas_MID00044_FID34555_SNR_Map_Tra_H0_dematch2.dat"
+  ],
+  "maps_from_3d": true,
+  "notes": "10-30: L05 dematched on purpose",
+  "operator": "demo"
+}

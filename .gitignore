@@ -25,3 +25,10 @@ node_modules/
 
 # Throwaway scripts with paths to human-subject data
 dicom_peek*.py
+
+# Build output of the standalone app
+build/
+dist/
+*.spec
+
+11-13 Scan/

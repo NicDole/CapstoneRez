@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-13 14:47:22",
+  "saved": "2026-11-21 19:14:27",
+  "baseline": true,
+  "status": "WATCH",
+  "summary": "2 element(s) changed or drifting since baseline",
+  "top": [
+    "O12",
+    "Q09",
+    "Q17",
+    "O05",
+    "J08"
+  ],
+  "protocol": "SNR_Map_Tra_H0",
+  "files": [
+    "meas_MID00018_FID35235_t1_mprage_sag_iso2mm.dat",
+    "meas_MID00017_FID35234_SNR_Map_Tra_H0.dat"
+  ],
+  "maps_from_3d": true,
+  "notes": "11-13 healthy (after re-tuning)",
+  "operator": "demo",
+  "baseline_reset": true
+}

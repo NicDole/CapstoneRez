@@ -1,0 +1,178 @@
+{
+  "meas_MID00022_FID35239_t1_mprage_sag_iso2mm_unmatch": {
+    "suspects": [
+      {
+        "element": "HEAD128_5301:O12",
+        "score": 7.0,
+        "reason": "abnormal noise coupling",
+        "signal": 3.8,
+        "noise": 1.1,
+        "snr": 3.4,
+        "coupling": 4.7,
+        "tuning": 0.3
+      },
+      {
+        "element": "HEAD128_5303:Q19",
+        "score": 3.2,
+        "reason": "abnormal signal",
+        "signal": 2.4,
+        "noise": 1.3,
+        "snr": 1.6,
+        "coupling": 0.0,
+        "tuning": 0.5
+      },
+      {
+        "element": "HEAD128_5301:O07",
+        "score": 2.9,
+        "reason": "abnormal tuning (noise-spectrum tilt)",
+        "signal": 0.0,
+        "noise": 0.0,
+        "snr": 0.0,
+        "coupling": 1.5,
+        "tuning": 2.5
+      }
+    ],
+    "high_confidence": [],
+    "top10": [
+      {
+        "element": "HEAD128_5301:O12",
+        "score": 7.0,
+        "reason": "abnormal noise coupling",
+        "signal": 3.8,
+        "noise": 1.1,
+        "snr": 3.4,
+        "coupling": 4.7,
+        "tuning": 0.3
+      },
+      {
+        "element": "HEAD128_5303:Q19",
+        "score": 3.2,
+        "reason": "abnormal signal",
+        "signal": 2.4,
+        "noise": 1.3,
+        "snr": 1.6,
+        "coupling": 0.0,
+        "tuning": 0.5
+      },
+      {
+        "element": "HEAD128_5301:O07",
+        "score": 2.9,
+        "reason": "abnormal tuning (noise-spectrum tilt)",
+        "signal": 0.0,
+        "noise": 0.0,
+        "snr": 0.0,
+        "coupling": 1.5,
+        "tuning": 2.5
+      },
+      {
+        "element": "HEAD128_5303:Q14",
+        "score": 2.7,
+        "reason": "abnormal signal",
+        "signal": 1.8,
+        "noise": 0.6,
+        "snr": 1.7,
+        "coupling": 0.5,
+        "tuning": 0.5
+      },
+      {
+        "element": "HEAD128_5306:M01",
+        "score": 2.4,
+        "reason": "abnormal tuning (noise-spectrum tilt)",
+        "signal": 0.5,
+        "noise": 0.9,
+        "snr": 0.0,
+        "coupling": 1.5,
+        "tuning": 1.6
+      },
+      {
+        "element": "HEAD128_5303:Q20",
+        "score": 2.4,
+        "reason": "abnormal signal",
+        "signal": 1.8,
+        "noise": 1.1,
+        "snr": 0.9,
+        "coupling": 0.3,
+        "tuning": 0.6
+      },
+      {
+        "element": "HEAD128_5306:N01",
+        "score": 2.4,
+        "reason": "abnormal tuning (noise-spectrum tilt)",
+        "signal": 1.0,
+        "noise": 0.0,
+        "snr": 1.4,
+        "coupling": 0.0,
+        "tuning": 1.7
+      },
+      {
+        "element": "HEAD128_5304:L05",
+        "score": 2.3,
+        "reason": "abnormal tuning (noise-spectrum tilt)",
+        "signal": 1.0,
+        "noise": 0.0,
+        "snr": 1.3,
+        "coupling": 0.3,
+        "tuning": 1.6
+      },
+      {
+        "element": "HEAD128_5301:O10",
+        "score": 2.2,
+        "reason": "abnormal noise coupling",
+        "signal": 1.0,
+        "noise": 0.4,
+        "snr": 1.0,
+        "coupling": 1.5,
+        "tuning": 0.7
+      },
+      {
+        "element": "HEAD128_5301:O09",
+        "score": 2.2,
+        "reason": "abnormal noise level",
+        "signal": 1.2,
+        "noise": 1.5,
+        "snr": 0.5,
+        "coupling": 0.3,
+        "tuning": 0.8
+      }
+    ],
+    "low_signal_not_ranked": [
+      "HEAD128_5305:J01",
+      "HEAD128_5305:J02",
+      "HEAD128_5305:J03",
+      "HEAD128_5305:J04",
+      "HEAD128_5305:J05",
+      "HEAD128_5305:J06",
+      "HEAD128_5301:O14"
+    ],
+    "subcoils": {
+      "HEAD128_5301": {
+        "elements": 20,
+        "signal_vs_coil": 0.61
+      },
+      "HEAD128_5302": {
+        "elements": 20,
+        "signal_vs_coil": 0.99
+      },
+      "HEAD128_5303": {
+        "elements": 20,
+        "signal_vs_coil": 0.83
+      },
+      "HEAD128_5304": {
+        "elements": 16,
+        "signal_vs_coil": 1.29
+      },
+      "HEAD128_5305": {
+        "elements": 8,
+        "signal_vs_coil": 0.21
+      },
+      "HEAD128_5306": {
+        "elements": 24,
+        "signal_vs_coil": 1.37
+      }
+    },
+    "files": [
+      "11-13 Scan/meas_MID00022_FID35239_t1_mprage_sag_iso2mm_unmatch.dat",
+      "11-13 Scan/meas_MID00021_FID35238_SNR_Map_Tra_H0_unmatch.dat"
+    ]
+  }
+}

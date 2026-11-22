@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-13 14:59:46",
+  "saved": "2026-11-21 19:14:27",
+  "baseline": false,
+  "status": "WATCH",
+  "summary": "1 element(s) changed or drifting since baseline",
+  "top": [
+    "M09",
+    "O12",
+    "Q10",
+    "Q14",
+    "M01"
+  ],
+  "protocol": "SNR_Map_Tra_H0_untune",
+  "files": [
+    "meas_MID00020_FID35237_t1_mprage_sag_iso2mm_untune.dat",
+    "meas_MID00019_FID35236_SNR_Map_Tra_H0_untune.dat"
+  ],
+  "maps_from_3d": true,
+  "notes": "11-13: M09 slightly untuned + coil moved",
+  "operator": "demo"
+}

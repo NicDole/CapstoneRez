@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-30 15:04:06",
+  "saved": "2026-11-21 19:14:27",
+  "baseline": false,
+  "status": "WATCH",
+  "summary": "3 element(s) changed or drifting since baseline",
+  "top": [
+    "L07",
+    "L08",
+    "Q11",
+    "Q17",
+    "Q09"
+  ],
+  "protocol": "SNR_Map_Tra_H0_untune2",
+  "files": [
+    "meas_MID00042_FID34553_t1_mprage_sag_iso2mm_untune.dat",
+    "meas_MID00045_FID34556_SNR_Map_Tra_H0_untune2.dat"
+  ],
+  "maps_from_3d": true,
+  "notes": "10-30: L07 untuned on purpose",
+  "operator": "demo"
+}

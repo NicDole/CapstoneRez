@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-30 14:58:19",
+  "saved": "2026-11-21 19:14:27",
+  "baseline": true,
+  "status": "OK",
+  "summary": "No clear problem found. No healthy baseline yet: verify the elements below, then set this scan as the baseline",
+  "top": [
+    "O12",
+    "O09",
+    "Q09",
+    "O14",
+    "O07"
+  ],
+  "protocol": "SNR_Map_Tra_H0_benchmark2",
+  "files": [
+    "meas_MID00040_FID34551_t1_mprage_sag_iso2mm_benchmark.dat",
+    "meas_MID00043_FID34554_SNR_Map_Tra_H0_benchmark2.dat"
+  ],
+  "maps_from_3d": true,
+  "notes": "10-30 benchmark",
+  "operator": "demo"
+}
